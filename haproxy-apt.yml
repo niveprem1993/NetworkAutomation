@@ -3,18 +3,18 @@
 #
 
 - name: Install HAProxy
-  action: apt pkg=$item state=latest
+  action: apt pkg="{{item}}" state=latest
   with_items:
     - haproxy
   
 - name: Enable HAProxy service
   action: service name=haproxy enabled=yes
   
-- name: Copy Ubuntu default file
-  action: >
-    copy dest=/etc/default/haproxy
-    src=../packages/files/haproxy/default
-    owner=root group=root mode=0444
+#- name: Copy Ubuntu default file
+ # action: >
+  #  copy dest=/etc/default/haproxy
+   # src=../packages/files/haproxy/default
+   # owner=root group=root mode=0444
   notify: restart haproxy
   # Note the notify clause is handled by a
   # Ansible handler (explained below)
