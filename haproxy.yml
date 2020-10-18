@@ -1,7 +1,7 @@
 ---
 # Set up and configure an HaProxy server (Ubuntu flavor)
 - name: haproxy
-  hosts: all
+  hosts: haproxy
   user: userwithsudoaccess
   sudo: True
   tags: haproxy
