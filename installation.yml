@@ -1,0 +1,21 @@
+---
+- hosts: webservers
+  remote_user: root
+  tasks:
+    - name: Install Nginx web server
+      become: true
+      apt:
+        name: nginx
+        state: latest 
+
+    - name: Install PHP CLI
+      become: true
+      apt:
+        name: php7.4-cli
+        state: latest
+
+    - name: Install PHP FPM
+      become: true
+      apt:
+        name: php7.4-fpm
+        state: latest
