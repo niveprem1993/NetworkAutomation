@@ -1,0 +1,11 @@
+---
+#- name: Configurations
+- hosts: localhost
+  become: yes
+  become_method: enable
+  user: root
+  import_playbook: installation.yml
+#  tasks:
+#    - name: Call installation file
+#      shell: "ansible-playbook -i hosts installation.yml -b -k"
+#      register: ansible_output
