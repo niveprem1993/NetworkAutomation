@@ -35,7 +35,7 @@
 
     - name: copy the content of the web site
       copy:
-        src: /home/ubuntu/NetworkAutomation/index.html
+        src: /home/ubuntu/NetworkAutomation/index.php
         dest: /etc/var/html/
       become: yes
 
