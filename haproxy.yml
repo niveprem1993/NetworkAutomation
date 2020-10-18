@@ -1,1 +1,41 @@
 ---
+# Set up and configure an HaProxy server (Ubuntu flavor)
+- name: haproxy
+  hosts: all
+  user: userwithsudoaccess
+  sudo: True
+  tags: haproxy
+
+  vars_files:
+    - "vars/main.yml"
+
+  tasks:
+
+    # haproxy package for Ubuntu
+    - include: tasks/haproxy-apt.yml
+
+    # Specific haproxy tasks follow here
+    - name: Copy haproxy logrotate file
+      action: >
+        copy src=files/haproxy.logrotate dest=/etc/logrotate.d/haproxy
+        mode=0644 owner=root group=root
+
+    - name: Create haproxy rsyslog configuration
+      action: >
+        copy src=files/haproxy-rsyslog.conf
+        dest=/etc/rsyslog.d/49-haproxy.conf
+        mode=0644 owner=root group=root
+      notify: restart rsyslog
+
+    - name: Configure system rsyslog
+      action: >
+        copy src=files/rsyslog.conf
+        dest=/etc/rsyslog.conf
+        mode=0644 owner=root group=root
+      notify: restart rsyslog
+
+    - name: Create haproxy configuration file
+      action: >
+        template src=templates/haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+        mode=0644 owner=root group=root
+      notify: restart haproxy
