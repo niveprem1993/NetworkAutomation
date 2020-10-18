@@ -19,10 +19,10 @@
       apt:
         name: php7.4-fpm
         state: latest
-    
+
     - name: copy the nginx config file and restart nginx
       copy:
-        src: /home/"{{ ansible_user }}"/NetworkAutomation/site.cfg
+        src: /home/ubuntu/NetworkAutomation/site.cfg
         dest: /etc/nginx/sites-available/site.cfg
       become: yes
  
@@ -35,12 +35,18 @@
 
     - name: copy the content of the web site
       copy:
-        src: /home/"{{ ansible_user }}"/NetworkAutomation/
+        src: /home/ubuntu/NetworkAutomation/index.html
         dest: /etc/var/html/
       become: yes
 
     - name: restart nginx
       service:
         name: nginx
+        state: restarted
+      become: yes
+
+    - name: restart php7.4-fpm
+      service:
+        name: php7.4-fpm
         state: restarted
       become: yes
