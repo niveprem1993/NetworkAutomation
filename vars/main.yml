@@ -1,1 +1,6 @@
 ---
+haproxy_port: 8080
+haproxy_servers:
+  - devA
+  - devB
+  - devC
