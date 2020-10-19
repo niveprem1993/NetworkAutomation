@@ -1,0 +1,13 @@
+---
+ - hosts: haproxy
+   remote_user: root
+   tasks:
+     - name: Get public ip
+       command: "curl https://ipinfo.io/ip"
+       register: command_output
+     - debug: msg="{{command_output.stdout}}"
+
+     - name: Ping proxy
+       command: "curl https://{{command_output.stdout}}"
+       command: "curl https://{{command_output.stdout}}"
+       command: "curl https://{{command_output.stdout}}"
