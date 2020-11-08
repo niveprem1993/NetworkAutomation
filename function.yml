@@ -8,6 +8,6 @@
      - debug: msg="{{command_output.stdout}}"
 
      - name: Ping proxy
-       command: "curl https://{{command_output.stdout}}"
-       command: "curl https://{{command_output.stdout}}"
-       command: "curl https://{{command_output.stdout}}"
+       command: "curl http://{{command_output.stdout}}"
+       command: "curl http://{{command_output.stdout}}"
+       command: "curl http://{{command_output.stdout}}"

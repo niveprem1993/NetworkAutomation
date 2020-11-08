@@ -2,38 +2,52 @@
 - hosts: haproxy
   remote_user: root
   tasks:
+    - name: update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: install haproxy
+      apt: name=haproxy state=present
+
+    - name: Enable init script
+      replace: dest='/etc/default/haproxy'
+             regexp='ENABLED=0'
+             replace='ENABLED=1'
+
     - name: Copy vars file
       copy:
-        src: /home/ubuntu/NetworkAutomation/vars.yml
+        src: ./vars.yml
         dest: /vars.yml
       become: yes
 
     - name: Copy task file
       copy:
-        src: /home/ubuntu/NetworkAutomation/haproxy-apt.yml
+        src: ./haproxy-apt.yml
         dest: /haproxy-apt.yml
       become: yes
 
     - name: Copy configuration file
       copy:
-        src: /home/ubuntu/NetworkAutomation/haproxy.cfg
+        src: ./haproxy.cfg
         dest: /etc/haproxy/haproxy.cfg
       become: yes
 
     - name: Copy handlers file
       copy:
-        src: /home/ubuntu/NetworkAutomation/handlers.yml
+        src: ./handlers.yml
         dest: /handlers.yml
       become: yes
 
     - name: Copy 49-haproxy file
       copy:
-        src: /home/ubuntu/NetworkAutomation/49-haproxy.conf
+        src: ./49-haproxy.conf
         dest: /etc/rsyslog.d/49-haproxy.conf
       become: yes
 
     - name: Copy logrotate
       copy:
-        src: /home/ubuntu/NetworkAutomation/haproxy
+        src: ./haproxy
         dest: /etc/logrotate.d/haproxy
       become: yes
+
+    - name: restart haproxy
+      apt: name=haproxy state=present

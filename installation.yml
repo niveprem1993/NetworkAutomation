@@ -22,20 +22,21 @@
 
     - name: copy the nginx config file and restart nginx
       copy:
-        src: /home/ubuntu/NetworkAutomation/site.cfg
+        src: ./site.cfg
         dest: /etc/nginx/sites-available/site.cfg
       become: yes
  
     - name: create symlink
       file:
         src: /etc/nginx/sites-available/site.cfg
+        remote_src: true
         dest: /etc/nginx/sites-enabled/default
         state: link
       become: yes
 
     - name: copy the content of the web site
       copy:
-        src: /home/ubuntu/NetworkAutomation/index.php
+        src: ./index.php
         dest: /etc/var/html/
       become: yes
 

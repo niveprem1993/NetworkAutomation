@@ -6,14 +6,32 @@
   hosts: localhost
 
   tasks:
+    - name: Finding file paths
+      find:
+         paths: /home
+         patterns: "hosts"
+      register: files_found
+      find:
+         paths: /home
+         patterns: "installation.yml"
+      register: ins_file
+      find:
+         paths: /home
+         patterns: "proxyins.yml"
+      register: proxy_file
+      find:
+         paths: /home
+         patterns: "function.yml"
+      register: func_file
+
     - name: Call installation file
-      command: "ansible-playbook -i ~/NetworkAutomation/hosts ~/NetworkAutomation/installation.yml -b -k"
+      shell: ansible-playbook -i ./hosts ./installation.yml -b -k
       become: yes
   
     - name: Call proxyins file
-      shell: ansible-playbook -i ~/NetworkAutomation/hosts ~/NetworkAutomation/proxyins.yml -b -k  
+      shell: ansible-playbook -i ./hosts ./proxyins.yml -b -k  
       become: yes
   
     - name: Call function file
-      shell: ansible-playbook -i ~/NetworkAutomation/hosts ~/NetworkAutomation/function.yml -b -k
+      shell: ansible-playbook -i ./hosts ./function.yml -b -k
       become: yes  
