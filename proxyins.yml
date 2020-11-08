@@ -6,12 +6,18 @@
       apt: update_cache=yes cache_valid_time=3600
 
     - name: install haproxy
-      apt: name=haproxy state=present
+      apt: name=haproxy state=latest
 
     - name: Enable init script
       replace: dest='/etc/default/haproxy'
              regexp='ENABLED=0'
              replace='ENABLED=1'
+             
+    - name: Install Nginx web server
+      become: true
+      apt:
+        name: nginx
+        state: latest
 
     - name: Copy vars file
       copy:
@@ -48,6 +54,9 @@
         src: ./haproxy
         dest: /etc/logrotate.d/haproxy
       become: yes
+      
+    - name: restart nginx
+      apt: name=nginx state=latest
 
     - name: restart haproxy
-      apt: name=haproxy state=present
+      apt: name=haproxy state=latest
