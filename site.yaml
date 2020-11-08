@@ -21,7 +21,7 @@
       register: proxy_file
       find:
          paths: /home
-         patterns: "function.yml"
+         patterns: "haproxy.yml"
       register: func_file
 
     - name: Call installation file
@@ -32,6 +32,6 @@
       shell: ansible-playbook -i ./hosts ./proxyins.yml -b -k  
       become: yes
   
-    - name: Call function file
-      shell: ansible-playbook -i ./hosts ./function.yml -b -k
+    - name: Call haproxy file
+      shell: ansible-playbook -i ./hosts ./haproxy.yml -b -k
       become: yes  
